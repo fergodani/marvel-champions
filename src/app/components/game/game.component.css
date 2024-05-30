@@ -1,0 +1,419 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    gap: 1em;
+    background-image: url('../../../assets/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /*background-color: #20396b;*/
+    padding: 0.5em;
+}
+
+p {
+    color: #f3f3f3;
+    text-align: center;
+}
+
+h3 {
+    color: #f3f3f3;
+    margin: 0;
+}
+
+.card {
+
+    cursor: pointer;
+    display: inline-block;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.5s ease;
+}
+
+.card-zoomed {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 75px !important;
+    transform: translate(-50%, -50%) scale(5);
+    z-index: 999;
+}
+
+.card img {
+    width: 75px;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+    border-radius: 5px;
+}
+
+.scheme {
+    position: relative;
+}
+
+.scheme::before {
+    content: attr(data-counter);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('../../../assets/threat.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #333;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+}
+
+
+.scheme img {
+    height: 75px;
+    width: auto;
+}
+
+
+.zoom-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.zoomed-card {
+    transform: none !important;
+}
+
+.zoomed-scheme img {
+    transform: scale(3.5) !important;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.zoomed-card img {
+    transform: scale(5) !important;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#villainSection,
+#heroSection {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+#villainSection {
+    flex: 1;
+    margin-top: 0.5em;
+}
+
+#villain {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#heroSection {
+    flex: 2;
+    margin-bottom: 0.5em;
+}
+
+#hero {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+
+
+#playerHand {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+
+}
+
+#playerHand .card {
+    overflow: visible;
+    width: 1px;
+    flex-grow: 1;
+}
+
+#playerHand .card:first-child {
+    margin-left: 0.5em;
+}
+
+#playerHand .card:last-child {
+    width: 75px;
+    flex-grow: 0;
+    margin-right: 0.5em;
+}
+
+.hero-health {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    background-image: url('../../../assets/spidermanHelath.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+    align-self: center;
+    flex-shrink: 3;
+}
+
+.villain-health {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    background-image: url('../../../assets/rhinoHealth.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    align-self: flex-start;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+.threat {
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 50px;
+    background-image: url('../../../assets/threat.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 5px;
+}
+
+.number {
+    font-size: 24px;
+    color: white;
+    /* Cambia el color según tu preferencia */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semitransparente para mejor legibilidad */
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.number-threat {
+    padding-top: 0.5em;
+    font-size: 16px;
+}
+
+
+.text-threat {
+    position: absolute;
+    top: 100%;
+    /* Coloca el texto justo debajo del contenedor */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: black;
+    /* Cambia el color según tu preferencia */
+}
+
+#side-schemes,
+#villain-cards,
+#heroSupports,
+#heroAllies,
+#hero-upgrades {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75em;
+    justify-content: center;
+}
+
+#heroSupports {
+    margin-bottom: 7em;
+}
+
+#hero-upgrades {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.rotatable {
+    transition: transform 0.5s ease;
+    /* Define la transición para la propiedad transform */
+}
+
+.rotated {
+    transform: rotate(90deg);
+    /* Aplica la rotación cuando se agrega la clase rotated */
+}
+
+#card5 {
+    position: relative;
+}
+
+#card5::before {
+    content: attr(data-counter);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('../../../assets/generic_counter.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #f3f3f3;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+}
+
+#divider {
+    display: flex;
+    width: 100%;
+    gap: 1em;
+}
+
+hr {
+    width: 100%;
+    border: 1px solid #fff;
+    margin: 20px 0;
+}
+
+
+.button-4 {
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+    margin-top: 4em;
+    margin-bottom: 4em;
+}
+
+.button-4:hover {
+    background-color: #F3F4F6;
+    text-decoration: none;
+    transition-duration: 0.1s;
+}
+
+.button-4:disabled {
+    background-color: #FAFBFC;
+    border-color: rgba(27, 31, 35, 0.15);
+    color: #959DA5;
+    cursor: default;
+}
+
+.button-4:active {
+    background-color: #EDEFF2;
+    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+    transition: none 0s;
+}
+
+.button-4:focus {
+    outline: 1px transparent;
+}
+
+.button-4:before {
+    display: none;
+}
+
+.button-4:-webkit-details-marker {
+    display: none;
+}
+
+.decks {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.decks img {
+    width: 40px;
+    height: auto;
+}
+
+.deck {
+    position: relative;
+    border-radius: 5px;
+}
+
+.deck::before {
+    content: attr(data-counter);
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+
+    font-size: 11px;
+    color: white;
+    /* Cambia el color según tu preferencia */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semitransparente para mejor legibilidad */
+    border-radius: 5px;
+}
+
+#line {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media screen and (min-width: 1000px) {
+    .card img {
+        width: 150px;
+        height: auto;
+    }
+}
