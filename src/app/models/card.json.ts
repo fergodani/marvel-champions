@@ -1,4 +1,4 @@
-export interface Card {
+export interface CardJson {
     id?: number | null;
     pack_code?: string | null;
     pack_name?: string | null;
@@ -80,7 +80,7 @@ export interface Card {
     url?: string | null;
     back_name?: string | null;
     imagesrc?: string | null;
-    linked_card?: Card | null;
+    linked_card?: CardJson | null;
     duplicated_by?: string[] | null;
 }
 

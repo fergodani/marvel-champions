@@ -1,6 +1,6 @@
-import { Card } from "../app/core/model/card.model";
+import { CardJson } from "../app/models/card.json";
 
-export const coreCards: Card[] = [
+export const coreCards: CardJson[] = [
     {
         "pack_code": "core",
         "pack_name": "Core Set",

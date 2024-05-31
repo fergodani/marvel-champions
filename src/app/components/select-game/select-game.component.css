@@ -1,0 +1,33 @@
+h1 {
+    margin: 0;
+    text-align: center;
+    color: #f3f3f3;
+    padding: 1em;
+}
+
+.card {
+    width: 150px;
+    height: 130px;
+    background-repeat: no-repeat;
+    background-size:cover;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+main {
+    height: 100%;
+    background-image: url('../../../assets/bg.png');
+    background-size: cover;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    overflow: scroll;
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: center;
+    height: fit-content;
+}

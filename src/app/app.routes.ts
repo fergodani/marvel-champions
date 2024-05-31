@@ -4,11 +4,11 @@ import { SelectGameComponent } from './components/select-game/select-game.compon
 
 export const routes: Routes = [
     {
-        path: '',
+        path: 'game',
         component: GameComponent
     },
     {
-        path: 'game',
-        component: GameComponent
+        path: '',
+        component: SelectGameComponent
     },
 ];

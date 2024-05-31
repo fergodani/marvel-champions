@@ -1,16 +1,21 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { coreCards } from '../../../assets/coreCards';
 import { smCards } from '../../../assets/smCards';
 import { drsCards } from '../../../assets/drsCards';
 import { spdrCards } from '../../../assets/spdrCards';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { CardService } from '../../services/card.service';
+import { Game } from '../../models/game';
+import { Card } from '../../models/card';
+import { CardJson } from '../../models/card.json';
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [NgFor, MatButtonModule, MatMenuModule],
+  imports: [NgFor, MatButtonModule, MatMenuModule, NgIf],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css'
 })
@@ -18,16 +23,40 @@ export class GameComponent implements OnInit {
   private pressTimer: any;
   private zoomOverlay: HTMLElement | null = null;
   private zoomedCard: HTMLElement | null = null;
+  game: Game = new Game();
 
   ngOnInit(): void {
-    const types: String[] = []
-    coreCards.forEach(card => {
-      if (card.type_code && !types.includes(card.type_code)) types.push(card.type_code)
-    })
-    console.log(types)
+    this.route.queryParams.subscribe(params => {
+      const heroSelected = params['heroSelected'];
+      const villainSelected = params['villainSelected'];
+      const encounterSelected = params['encounterSelected'];
+      const gameCards = this.cardService.getDeckByCardSetCode(heroSelected)
+      this.game.heroCards = gameCards.heroes;
+      this.game.nemesisDeck = gameCards.nemesis;
+      this.game.playerDeck = gameCards.deck;
+      console.log(villainSelected)
+      const villainCards = this.cardService.getVillainDeckByCardSetCode(villainSelected, encounterSelected);
+      const encounterDeck: Card[] = []
+      villainCards.encounters.forEach(card => encounterDeck.push(card))
+      encounterDeck.push(gameCards.obligation)
+      villainCards.environments.forEach(card => {
+        this.game.environments.push(card)
+      })
+      encounterDeck.forEach(card => this.game.encounterDeck.push(card))
+      villainCards.villains.forEach(card => this.game.villainCards.push(card))
+      villainCards.mainSchemes.forEach(card => this.game.mainSchemes.push(card))
+      console.log(this.game)
+      this.initializeGame();
+      
+    });
   }
 
-  constructor(private renderer: Renderer2) { }
+  constructor(
+    private renderer: Renderer2,
+    private route: ActivatedRoute,
+    private router: Router,
+    private cardService: CardService,
+  ) { }
 
   coreCards = coreCards;
   smCards = smCards;
@@ -96,6 +125,22 @@ export class GameComponent implements OnInit {
     this.rotate = !this.rotate; // Alterna el estado de rotación
   }
 
+  initializeGame() {
+    this.shuffleDeck(this.game.playerDeck);
+    this.game.playerHand.push(this.game.playerDeck.shift()!)
+    this.game.playerHand.push(this.game.playerDeck.shift()!)
+    this.game.playerHand.push(this.game.playerDeck.shift()!)
+    this.game.playerHand.push(this.game.playerDeck.shift()!)
+  }
 
+  shuffleDeck(deck: CardJson[]) {
+    // Iteramos desde el final del array hacia el principio
+    for (let i = deck.length - 1; i > 0; i--) {
+        // Seleccionamos un índice aleatorio entre 0 y i
+        const j = Math.floor(Math.random() * (i + 1));
+        // Intercambiamos los elementos en los índices i y j
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+}
 
 }

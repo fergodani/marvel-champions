@@ -2,13 +2,13 @@
     <section id="villainSection">
 
         <section id="villain">
-            
+
 
             <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                 (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
                 <img
-                    [src]="coreCards[96].imagesrc ? 'https://marvelcdb.com' + coreCards[96].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="game.villainCards[0].imagesrc ? 'https://marvelcdb.com' + game.villainCards[0].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
             </div>
             <div id="main-scheme">
                 <div class="card scheme" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
@@ -16,70 +16,36 @@
                     (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)" data-counter="5">
 
                     <img
-                        [src]="coreCards[99].imagesrc ? 'https://marvelcdb.com' + coreCards[99].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'">
+                        [src]="game.mainSchemes[0].imagesrc ? 'https://marvelcdb.com' + game.mainSchemes[0].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'">
                 </div>
             </div>
             <div id="environment">
                 <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                     (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                    (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
+                    (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
+                    *ngFor="let card of game.environments">
                     <img
-                        [src]="smCards[77].imagesrc ? 'https://marvelcdb.com' + smCards[76].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                        [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
                 </div>
             </div>
         </section>
         <section id="side-schemes">
             <div class="card scheme" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)" data-counter="5">
+                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)" data-counter="5"
+                *ngFor="let card of game.sideSchemes">
 
                 <img
-                    [src]="coreCards[99].imagesrc ? 'https://marvelcdb.com' + coreCards[99].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-            </div>
-            <div class="card scheme" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
-                (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)" data-counter="5">
-
-                <img
-                    [src]="coreCards[99].imagesrc ? 'https://marvelcdb.com' + coreCards[99].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
             </div>
         </section>
         <section id="villain-cards">
             <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
+                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
+                *ngFor="let card of game.villainCardsInPlay">
                 <img
-                    [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-            </div>
-            <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
-                (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
-                <img
-                    [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-            </div>
-            <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
-                (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
-                <img
-                    [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-            </div>
-            <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
-                (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
-                <img
-                    [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-            </div>
-            <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
-                (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
-                <img
-                    [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-            </div>
-            <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
-                (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
-                <img
-                    [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
             </div>
         </section>
 
@@ -87,27 +53,33 @@
     <section id="divider">
         <div id="line">
             <section class="decks">
-                <div id="encounter-discard" class="deck" data-counter="8">
+                <div id="encounter-discard" class="deck" [attr.data-counter]="game.discardEncounterDeck.length">
                     <img
-                        [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                        [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" *ngIf="game.discardEncounterDeck.length != 0"/>
+                        <img src="../../../assets/encounter_discard.png" alt="encounter discard"
+                    *ngIf="game.discardEncounterDeck.length == 0" />
                 </div>
+                
                 <div class="villain-health">
                     <span class="number">14</span>
                 </div>
-                <div id="discard-deck" class="deck" data-counter="19">
+                <div id="encounter-deck" class="deck" [attr.data-counter]="game.encounterDeck.length">
                     <img src="../../../assets/encounter_card_back_marvelchampions.png" />
                 </div>
             </section>
             <hr>
             <section class="decks">
-                <div id="player-discard" class="deck" data-counter="5">
+                <div id="player-discard" class="deck" [attr.data-counter]="game.playerDiscardDeck.length">
                     <img
-                        [src]="coreCards[52].imagesrc ? 'https://marvelcdb.com' + coreCards[52].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                        [src]="coreCards[52].imagesrc ? 'https://marvelcdb.com' + coreCards[52].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" *ngIf="game.discardEncounterDeck.length != 0"/>
+                    <img src="../../../assets/discard.png" alt="encounter discard"
+                        *ngIf="game.discardEncounterDeck.length == 0" />
                 </div>
+
                 <div class="hero-health">
                     <span class="number">9</span>
                 </div>
-                <div id="player-deck" class="deck" data-counter="24">
+                <div id="player-deck" class="deck" [attr.data-counter]="game.playerDeck.length">
                     <img src="../../../assets/card_back_marvelchampions.png" />
                 </div>
             </section>
@@ -116,53 +88,41 @@
     </section>
     <section id="heroSection">
         <section id="hero">
-            
+
             <div class="card rotatable" [class.rotated]="rotate" (mousedown)="startZoom($event)"
                 (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
                 (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-                (selectstart)="preventDefault($event)" [matMenuTriggerFor]="menu">
+                (selectstart)="preventDefault($event)" [matMenuTriggerFor]="menu" *ngFor="let card of game.heroCards">
                 <img
-                    [src]="coreCards[0].imagesrc ? 'https://marvelcdb.com' + coreCards[0].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
             </div>
         </section>
         <div id="hero-upgrades">
             <div class="card rotatable" [class.rotated]="rotate" (mousedown)="startZoom($event)"
                 (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
                 (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-                (selectstart)="preventDefault($event)">
+                (selectstart)="preventDefault($event)" *ngFor="let card of game.heroUpgrades">
                 <img
-                    [src]="coreCards[52].imagesrc ? 'https://marvelcdb.com' + coreCards[52].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-            </div>
-            <div class="card rotatable" [class.rotated]="rotate" (mousedown)="startZoom($event)"
-                (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
-                (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-                (selectstart)="preventDefault($event)">
-                <img
-                    [src]="coreCards[53].imagesrc ? 'https://marvelcdb.com' + coreCards[53].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
             </div>
 
         </div>
         <section id="heroAllies">
-            <div id="card5" class="card rotatable" [class.rotated]="rotate" (mousedown)="startZoom($event)"
+            <div class="card rotatable" [class.rotated]="rotate" (mousedown)="startZoom($event)"
                 (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
                 (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-                (selectstart)="preventDefault($event)" data-counter="5">
+                (selectstart)="preventDefault($event)" data-counter="5" *ngFor="let card of game.allies">
                 <img
-                    [src]="coreCards[52].imagesrc ? 'https://marvelcdb.com' + coreCards[52].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-            </div>
-            <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
-                (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
-                <img
-                    [src]="coreCards[52].imagesrc ? 'https://marvelcdb.com' + coreCards[52].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
             </div>
         </section>
         <section id="heroSupports">
             <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
+                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
+                *ngFor="let card of game.heroSupport">
                 <img
-                    [src]="coreCards[52].imagesrc ? 'https://marvelcdb.com' + coreCards[34].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
             </div>
         </section>
 
@@ -171,47 +131,11 @@
         <!-- Aquí van las cartas en la mano del jugador -->
         <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)"
             (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-            (selectstart)="preventDefault($event)" appOpenMenuTrigger [matMenuTriggerFor]="menu">
+            (selectstart)="preventDefault($event)" appOpenMenuTrigger [matMenuTriggerFor]="menu"
+            *ngFor="let card of game.playerHand">
             <img
-                [src]="coreCards[2].imagesrc ? 'https://marvelcdb.com' + coreCards[2].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
         </div>
-        <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)"
-            (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-            (selectstart)="preventDefault($event)">
-            <img
-                [src]="coreCards[3].imagesrc ? 'https://marvelcdb.com' + coreCards[3].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-        </div>
-        <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)"
-            (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-            (selectstart)="preventDefault($event)">
-            <img
-                [src]="coreCards[4].imagesrc ? 'https://marvelcdb.com' + coreCards[4].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-        </div>
-        <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)"
-            (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-            (selectstart)="preventDefault($event)">
-            <img
-                [src]="coreCards[5].imagesrc ? 'https://marvelcdb.com' + coreCards[5].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-        </div>
-        <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)"
-            (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-            (selectstart)="preventDefault($event)">
-            <img
-                [src]="coreCards[6].imagesrc ? 'https://marvelcdb.com' + coreCards[6].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-        </div>
-        <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)"
-            (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-            (selectstart)="preventDefault($event)">
-            <img
-                [src]="coreCards[7].imagesrc ? 'https://marvelcdb.com' + coreCards[7].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-        </div>
-        <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)"
-            (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-            (selectstart)="preventDefault($event)">
-            <img
-                [src]="coreCards[8].imagesrc ? 'https://marvelcdb.com' + coreCards[8].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
-        </div>
-        <!-- Agrega más cartas según sea necesario -->
     </div>
 </main>
 <mat-menu #menu="matMenu">

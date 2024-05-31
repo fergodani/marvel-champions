@@ -1,3 +1,29 @@
-<div class="card" *ngFor="let card of this.heroes">
-        <img  [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+<main>
+    <div *ngIf="isHeroes">
+        <h1>Select your hero</h1>
+        <section id="heroes">
+            <div class="card" *ngFor="let card of this.heroes"
+                [ngStyle]="{ 'background-image': 'url(https://marvelcdb.com' + card.imagesrc + ')' }"
+                (mouseup)="selectHero(card)">
+            </div>
+        </section>
     </div>
+    <div *ngIf="isVillains">
+        <h1>Select the villain</h1>
+        <section id="villains">
+            <div class="card" *ngFor="let card of this.villains"
+                [ngStyle]="{ 'background-image': 'url(https://marvelcdb.com' + card[0].imagesrc + ')' }"
+                (mouseup)="selectVillain(card[0])">
+            </div>
+        </section>
+    </div>
+    <div *ngIf="isEncounters">
+        <h1>Select the modular encounters</h1>
+        <section id="villains">
+            <div class="card" *ngFor="let card of this.modularEncounters"
+                [ngStyle]="{ 'background-image': 'url(https://marvelcdb.com' + card[0].imagesrc + ')' }"
+                (mouseup)="selectModularEncounter(card[0])">
+            </div>
+        </section>
+    </div>
+</main>
