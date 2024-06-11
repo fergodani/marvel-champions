@@ -4,18 +4,32 @@ import { coreCards } from '../../../assets/coreCards';
 import { smCards } from '../../../assets/smCards';
 import { drsCards } from '../../../assets/drsCards';
 import { spdrCards } from '../../../assets/spdrCards';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, AsyncPipe, NgStyle } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { CardService } from '../../services/card.service';
 import { Game } from '../../models/game';
-import { Card } from '../../models/card';
 import { CardJson } from '../../models/card.json';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+} from '@angular/material/dialog';
+import { GameService } from '../../services/game.service';
+import { Observable } from 'rxjs';
+import { PlayCardDialogComponent } from './play-card-dialog/play-card-dialog.component';
+import { PlayerCard } from '../../models/cards/playerCard';
+import { DialogService } from '../../services/dialog.service';
+import { Ally } from '../../models/cards/ally';
+import { Hero } from '../../models/cards/hero';
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [NgFor, MatButtonModule, MatMenuModule, NgIf],
+  imports: [NgFor, MatButtonModule, MatMenuModule, NgIf, AsyncPipe, NgStyle],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css'
 })
@@ -23,31 +37,14 @@ export class GameComponent implements OnInit {
   private pressTimer: any;
   private zoomOverlay: HTMLElement | null = null;
   private zoomedCard: HTMLElement | null = null;
-  game: Game = new Game();
+  game$: Observable<Game>;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const heroSelected = params['heroSelected'];
       const villainSelected = params['villainSelected'];
       const encounterSelected = params['encounterSelected'];
-      const gameCards = this.cardService.getDeckByCardSetCode(heroSelected)
-      this.game.heroCards = gameCards.heroes;
-      this.game.nemesisDeck = gameCards.nemesis;
-      this.game.playerDeck = gameCards.deck;
-      console.log(villainSelected)
-      const villainCards = this.cardService.getVillainDeckByCardSetCode(villainSelected, encounterSelected);
-      const encounterDeck: Card[] = []
-      villainCards.encounters.forEach(card => encounterDeck.push(card))
-      encounterDeck.push(gameCards.obligation)
-      villainCards.environments.forEach(card => {
-        this.game.environments.push(card)
-      })
-      encounterDeck.forEach(card => this.game.encounterDeck.push(card))
-      villainCards.villains.forEach(card => this.game.villainCards.push(card))
-      villainCards.mainSchemes.forEach(card => this.game.mainSchemes.push(card))
-      console.log(this.game)
-      this.initializeGame();
-      
+      this.gameService.initGame(heroSelected, villainSelected, encounterSelected);
     });
   }
 
@@ -55,8 +52,12 @@ export class GameComponent implements OnInit {
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
-    private cardService: CardService,
-  ) { }
+    private gameService: GameService,
+    public dialog: MatDialog,
+    private dialogService: DialogService
+  ) {
+    this.game$ = this.gameService.getGameObservable();
+  }
 
   coreCards = coreCards;
   smCards = smCards;
@@ -81,8 +82,6 @@ export class GameComponent implements OnInit {
       } else {
         this.renderer.addClass(this.zoomedCard, 'zoomed-card');
       }
-      
-      
 
       this.renderer.appendChild(this.zoomOverlay, this.zoomedCard);
       this.renderer.appendChild(document.body, this.zoomOverlay);
@@ -92,7 +91,7 @@ export class GameComponent implements OnInit {
       this.renderer.listen(this.zoomOverlay, 'touchend', this.removeZoom.bind(this));
       this.renderer.listen(this.zoomOverlay, 'touchstart', this.preventDefault.bind(this));
       this.renderer.listen(this.zoomOverlay, 'contextmenu', this.preventDefault.bind(this));
-      
+
     }, 200);
   }
 
@@ -119,28 +118,36 @@ export class GameComponent implements OnInit {
     e.stopPropagation();
   }
 
-  rotate: boolean = false; // Estado inicial de la rotación
-
-  toggleRotation() {
-    this.rotate = !this.rotate; // Alterna el estado de rotación
+  toggleHero() {
+    this.gameService.toggleHero();
   }
 
-  initializeGame() {
-    this.shuffleDeck(this.game.playerDeck);
-    this.game.playerHand.push(this.game.playerDeck.shift()!)
-    this.game.playerHand.push(this.game.playerDeck.shift()!)
-    this.game.playerHand.push(this.game.playerDeck.shift()!)
-    this.game.playerHand.push(this.game.playerDeck.shift()!)
-  }
-
-  shuffleDeck(deck: CardJson[]) {
-    // Iteramos desde el final del array hacia el principio
-    for (let i = deck.length - 1; i > 0; i--) {
-        // Seleccionamos un índice aleatorio entre 0 y i
-        const j = Math.floor(Math.random() * (i + 1));
-        // Intercambiamos los elementos en los índices i y j
-        [deck[i], deck[j]] = [deck[j], deck[i]];
+  openDialog(cardToPlay: PlayerCard, hand: PlayerCard[]): void {
+    this.gameService.openPlayCardDialog({
+      card: cardToPlay,
+      hand
     }
-}
+    );
+  }
+
+  heroAttack(hero: Hero) {
+    hero.executeAttack();
+  }
+
+  heroThwart(hero: Hero) {
+    hero.executeThwart();
+  }
+
+  allyAttack(card: Ally) {
+    card.executeAttack();
+  }
+
+  allyThwart(card: Ally) {
+    card.executeThwart();
+  }
+
+  endTurn() {
+    this.gameService.preparePlayerCards();
+  }
 
 }

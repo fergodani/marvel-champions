@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Select target</h2>
+<mat-dialog-content id="cards">
+    <img *ngFor="let card of targets" (click)="selectTarget(card)" 
+        [src]="card.imagesrc" [class.selected]="isSelected(card)"/>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button  cdkFocusInitial [disabled]="!selectedCard" (click)="attack()">Accept</button>
+</mat-dialog-actions>

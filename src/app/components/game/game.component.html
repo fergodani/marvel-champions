@@ -1,4 +1,4 @@
-<main id="cards">
+<main id="cards" *ngIf="game$ | async as game">
     <section id="villainSection">
 
         <section id="villain">
@@ -8,24 +8,25 @@
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                 (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
                 <img
-                    [src]="game.villainCards[0].imagesrc ? 'https://marvelcdb.com' + game.villainCards[0].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="game.getVillainCards()[0].imagesrc ? 'https://marvelcdb.com' + game.getVillainCards()[0].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
             </div>
             <div id="main-scheme">
                 <div class="card scheme" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                     (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
-                    (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)" data-counter="5">
+                    (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
+                    [attr.data-counter]="game.getMainScheme().getCurrentThreat()">
 
                     <img
-                        [src]="game.mainSchemes[0].imagesrc ? 'https://marvelcdb.com' + game.mainSchemes[0].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'">
+                        [src]="game.getMainScheme().getCurrentStage().getImagesrc()">
                 </div>
             </div>
             <div id="environment">
                 <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                     (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                     (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
-                    *ngFor="let card of game.environments">
+                    *ngFor="let card of game.getEnvironments()">
                     <img
-                        [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                        [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + card.code + '.png'" />
                 </div>
             </div>
         </section>
@@ -33,19 +34,19 @@
             <div class="card scheme" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                 (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)" data-counter="5"
-                *ngFor="let card of game.sideSchemes">
+                *ngFor="let card of game.getSideSchemes()">
 
-                <img
-                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                <!--<img
+                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + card.code + '.png'" /> -->
             </div>
         </section>
         <section id="villain-cards">
             <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                 (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
-                *ngFor="let card of game.villainCardsInPlay">
+                *ngFor="let card of game.getVillainCardsInPlay()">
                 <img
-                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + card.code + '.png'" />
             </div>
         </section>
 
@@ -53,76 +54,88 @@
     <section id="divider">
         <div id="line">
             <section class="decks">
-                <div id="encounter-discard" class="deck" [attr.data-counter]="game.discardEncounterDeck.length">
-                    <img
-                        [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" *ngIf="game.discardEncounterDeck.length != 0"/>
-                        <img src="../../../assets/encounter_discard.png" alt="encounter discard"
-                    *ngIf="game.discardEncounterDeck.length == 0" />
+                <div id="encounter-discard" class="deck" [attr.data-counter]="game.getDiscardEncounterDeck().length">
+                    <img [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'"
+                        *ngIf="game.getDiscardEncounterDeck().length != 0" />
+                    <img src="../../../assets/encounter_discard.png" alt="encounter discard"
+                        *ngIf="game.getDiscardEncounterDeck().length == 0" />
                 </div>
-                
-                <div class="villain-health">
-                    <span class="number">14</span>
+
+                <div class="villain-health"
+                    [ngStyle]="{ 'background-image': 'url(../../../assets/' + game.getVillain().getCardSetCode() + '.png)' }">
+                    <span class="number">{{game.getVillain().getCurrentStage().getHealth()}}</span>
                 </div>
-                <div id="encounter-deck" class="deck" [attr.data-counter]="game.encounterDeck.length">
+                <div id="encounter-deck" class="deck" [attr.data-counter]="game.getEncounterDeck().length">
                     <img src="../../../assets/encounter_card_back_marvelchampions.png" />
                 </div>
             </section>
             <hr>
             <section class="decks">
-                <div id="player-discard" class="deck" [attr.data-counter]="game.playerDiscardDeck.length">
-                    <img
-                        [src]="coreCards[52].imagesrc ? 'https://marvelcdb.com' + coreCards[52].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" *ngIf="game.discardEncounterDeck.length != 0"/>
+                <div id="player-discard" class="deck" [attr.data-counter]="game.getPlayerDiscardDeck().length">
+                    <img [src]="game.getPlayerDiscardDeck()[game.getPlayerDiscardDeck().length-1].getImageSrc()"
+                        *ngIf="game.getPlayerDiscardDeck().length != 0" />
                     <img src="../../../assets/discard.png" alt="encounter discard"
-                        *ngIf="game.discardEncounterDeck.length == 0" />
+                        *ngIf="game.getPlayerDiscardDeck().length == 0" />
                 </div>
 
-                <div class="hero-health">
-                    <span class="number">9</span>
+                <div class="hero-health"
+                    [ngStyle]="{ 'background-image': 'url(../../../assets/' + game.getHero().getCardSetCode() + '.png)' }">
+                    <span class="number">{{game.getHero().getHealth()}}</span>
                 </div>
-                <div id="player-deck" class="deck" [attr.data-counter]="game.playerDeck.length">
+                <div id="player-deck" class="deck" [attr.data-counter]="game.getPlayerDeck().length">
                     <img src="../../../assets/card_back_marvelchampions.png" />
                 </div>
             </section>
         </div>
-        <button (click)="toggleRotation()" class="button-4">End turn</button>
+        <button class="button-4" (click)="endTurn()">End turn</button>
     </section>
     <section id="heroSection">
         <section id="hero">
-
-            <div class="card rotatable" [class.rotated]="rotate" (mousedown)="startZoom($event)"
+            <div class="card rotatable" [class.rotated]="game.getHero().isExhausted()" (mousedown)="startZoom($event)"
                 (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
                 (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-                (selectstart)="preventDefault($event)" [matMenuTriggerFor]="menu" *ngFor="let card of game.heroCards">
-                <img
-                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                (selectstart)="preventDefault($event)" [matMenuTriggerFor]="heroMenu">
+                <img id="alter-ego-face" *ngIf="game.getHero().getIsAlterEgo()"
+                    [src]="game.getHero().getAlterEgoImagesrc()" />
+                <img id="hero-face" *ngIf="!game.getHero().getIsAlterEgo()" [src]="game.getHero().getHeroImagesrc()" />
+                <mat-menu #heroMenu="matMenu">
+                    <button mat-menu-item *ngIf="!game.getHero().getIsAlterEgo()" (click)="toggleHero()">Alter Ego</button>
+                    <button mat-menu-item *ngIf="game.getHero().getIsAlterEgo()" (click)="toggleHero()">Hero</button>
+                    <button mat-menu-item *ngIf="!game.getHero().getIsAlterEgo()" (click)="heroAttack(game.getHero())">Attack</button>
+                    <button mat-menu-item *ngIf="!game.getHero().getIsAlterEgo()" (click)="heroThwart(game.getHero())">Thwart</button>
+                    <button mat-menu-item *ngIf="game.getHero().getIsAlterEgo()">Recover</button>
+                    <button mat-menu-item>Action</button>
+                </mat-menu>
             </div>
         </section>
         <div id="hero-upgrades">
-            <div class="card rotatable" [class.rotated]="rotate" (mousedown)="startZoom($event)"
-                (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
-                (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-                (selectstart)="preventDefault($event)" *ngFor="let card of game.heroUpgrades">
-                <img
-                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+            <div class="card rotatable" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
+                (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
+                (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
+                *ngFor="let card of game.getHeroUpgrades()" [matMenuTriggerFor]="actionMenu">
+                <img [src]="card.getImageSrc()" />
             </div>
 
         </div>
         <section id="heroAllies">
-            <div class="card rotatable" [class.rotated]="rotate" (mousedown)="startZoom($event)"
+            <div class="card rotatable" [class.rotated]="card.isExhausted()" (mousedown)="startZoom($event)"
                 (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
                 (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-                (selectstart)="preventDefault($event)" data-counter="5" *ngFor="let card of game.allies">
-                <img
-                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                (selectstart)="preventDefault($event)" data-counter="5" *ngFor="let card of game.getAllies()"
+                [matMenuTriggerFor]="allyMenu">
+                <img [src]="card.getImageSrc()" />
+                <mat-menu #allyMenu="matMenu">
+                    <button mat-menu-item (click)="allyAttack(card)">Attack</button>
+                    <button mat-menu-item (click)="allyThwart(card)">Thwart</button>
+                </mat-menu>
             </div>
         </section>
         <section id="heroSupports">
             <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                 (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
-                *ngFor="let card of game.heroSupport">
-                <img
-                    [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+                *ngFor="let card of game.getHeroSupport()" [matMenuTriggerFor]="actionMenu">
+                <img [src]="card.getImageSrc()" />
             </div>
         </section>
 
@@ -131,14 +144,13 @@
         <!-- Aquí van las cartas en la mano del jugador -->
         <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)"
             (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-            (selectstart)="preventDefault($event)" appOpenMenuTrigger [matMenuTriggerFor]="menu"
-            *ngFor="let card of game.playerHand">
-            <img
-                [src]="card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'" />
+            (selectstart)="preventDefault($event)" appOpenMenuTrigger *ngFor="let card of game.getPlayerHand()"
+            (click)="openDialog(card, game.getPlayerHand())">
+            <img [src]="card.getImageSrc()" />
         </div>
     </div>
+    
+    <mat-menu #actionMenu="matMenu">
+        <button mat-menu-item>Action</button>
+    </mat-menu>
 </main>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item>Alter Ego</button>
-    <button mat-menu-item>Action</button>
-</mat-menu>

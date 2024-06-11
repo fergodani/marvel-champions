@@ -1,7 +1,7 @@
 import { GameService } from '../../services/game.service';
 import { Command } from './command';
 
-export class DamageCommand implements Command {
+export class ThwartCommand implements Command {
 
     private amount: number;
     private gameService: GameService
@@ -13,8 +13,8 @@ export class DamageCommand implements Command {
 
     async execute(): Promise<void> {
         const amount = this.amount;
-        const target = await this.gameService.openDamageTargetDialog()
+        const target = await this.gameService.openSchemeTargetDialog()
         if (target)
-            target.dealDamage(amount);
+            target.thwart(amount);
     }
 }

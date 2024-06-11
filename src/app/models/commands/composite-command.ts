@@ -7,9 +7,9 @@ export class CompositeCommand implements Command {
         this.commands.push(command);
     }
 
-    execute(): void {
+    async execute(): Promise<void> {
         for (const command of this.commands) {
-            command.execute();
+            await command.execute();
         }
     }
 }

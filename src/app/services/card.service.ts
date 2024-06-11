@@ -393,9 +393,7 @@ export class CardService {
     }
     // Obtain standard encounter cards
     coreCards.forEach(card => {
-      if (card.card_set_code == "standard")
-        villainCards.encounters.push(card)
-      else if (card.card_set_code == modularSetCode) {
+      if (card.card_set_code == "standard" || card.card_set_code == modularSetCode) {
         for (let i = 0; i < card.quantity!; i++) {
           villainCards.encounters.push(card)
         }
@@ -421,16 +419,24 @@ export class CardService {
       case "ultron": {
         coreCards.forEach(card => {
           if (card.card_set_code == villainSetCode && card.type_code == "villain") {
-            villainCards.villains.push(card)
+            for (let i = 0; i < card.quantity!; i++) {
+              villainCards.villains.push(card)
+            }
           }
           else if (card.card_set_code == villainSetCode && card.type_code == "main_scheme") {
-            villainCards.mainSchemes.push(card)
+            for (let i = 0; i < card.quantity!; i++) {
+              villainCards.mainSchemes.push(card)
+            }
           }
           else if (card.card_set_code == villainSetCode && card.type_code == "environment") {
-            villainCards.environments.push(card)
+            for (let i = 0; i < card.quantity!; i++) {
+              villainCards.environments.push(card)
+            }
           }
           else if (card.card_set_code == villainSetCode) {
-            villainCards.encounters.push(card)
+            for (let i = 0; i < card.quantity!; i++) {
+              villainCards.encounters.push(card)
+            }
           }
         })
         break;
@@ -442,16 +448,24 @@ export class CardService {
       case "mysterio": {
         smCards.forEach(card => {
           if (card.card_set_code == villainSetCode && card.type_code == "villain") {
-            villainCards.villains.push(card)
+            for (let i = 0; i < card.quantity!; i++) {
+              villainCards.villains.push(card)
+            }
           }
           else if (card.card_set_code == villainSetCode && card.type_code == "main_scheme") {
-            villainCards.mainSchemes.push(card)
+            for (let i = 0; i < card.quantity!; i++) {
+              villainCards.mainSchemes.push(card)
+            }
           }
           else if (card.card_set_code == villainSetCode && card.type_code == "environment") {
-            villainCards.environments.push(card)
+            for (let i = 0; i < card.quantity!; i++) {
+              villainCards.environments.push(card)
+            }
           }
           else if (card.card_set_code == villainSetCode) {
-            villainCards.encounters.push(card)
+            for (let i = 0; i < card.quantity!; i++) {
+              villainCards.encounters.push(card)
+            }
           }
         })
         break;

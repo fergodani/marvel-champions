@@ -1,0 +1,51 @@
+#content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#content img {
+    width: 100%;
+    height: auto;
+}
+
+#discard {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+    margin-top:0.5em;
+}
+
+#discard img {
+    width: 45%;
+    height: auto;
+    transition: all 0.5s ease;
+}
+#discard > img.selected {
+    transform: scale(1.1);
+}
+
+#resources {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#resources div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#resources p {
+    text-align: center;
+}
+
+#resources img{
+    width: 50%;
+    height: auto;
+}

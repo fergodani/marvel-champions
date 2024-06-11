@@ -24,7 +24,7 @@ h3 {
 }
 
 .card {
-
+    position: relative;
     cursor: pointer;
     display: inline-block;
     -webkit-tap-highlight-color: transparent;
@@ -175,7 +175,6 @@ h3 {
     position: relative;
     width: 100px;
     height: 50px;
-    background-image: url('../../../assets/spidermanHelath.png');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -192,7 +191,6 @@ h3 {
     position: relative;
     width: 100px;
     height: 50px;
-    background-image: url('../../../assets/rhinoHealth.png');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -410,6 +408,30 @@ hr {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.cardFront,
+.cardBack {
+  box-sizing: border-box;
+  transition: transform 0.5s ease;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.cardBack {
+  transform: perspective(1000px) rotateY(180deg);
+}
+
+.cardBack.flipped {
+  transform: perspective(1000px) rotateY(0deg);
+}
+
+.cardFront {
+  transform: perspective(1000px) rotateY(0deg);
+}
+
+.cardFront.flipped {
+  transform: perspective(1000px) rotateY(-180deg);
 }
 
 @media screen and (min-width: 1000px) {

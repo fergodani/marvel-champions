@@ -1,0 +1,36 @@
+<h2 mat-dialog-title *ngIf="!isDiscardCards">{{data.card.getName()}}</h2>
+
+<div *ngIf="isDiscardCards">
+    <h2 mat-dialog-title>Discard cards {{wild+mental+physical+energy}}/{{data.card.getCost()}}</h2>
+    <div id="resources">
+        <div id="physical">
+            <img src="../../../../assets/physical.jpg" />
+            <p>{{physical}}</p>
+        </div>
+        <div id="energy">
+            <img src="../../../../assets/energy.jpg" />
+            <p>{{energy}}</p>
+        </div>
+        <div id="mental">
+            <img src="../../../../assets/mental.jpg" />
+            <p>{{mental}}</p>
+        </div>
+        <div id="wild">
+            <img src="../../../../assets/wild.jpg" />
+            <p>{{wild}}</p>
+        </div>
+    </div>
+</div>
+<mat-dialog-content id="content" *ngIf="!isDiscardCards">
+    <img
+        [src]="data.card.getImageSrc()" />
+</mat-dialog-content>
+<mat-dialog-content id="discard" *ngIf="isDiscardCards">
+    <img *ngFor="let card of data.hand" (click)="toggleCardSelection(card)" [class.selected]="isSelected(card)"
+        [src]="card.getImageSrc()" />
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button (click)="discardAndPlay()" cdkFocusInitial *ngIf="isDiscardCards" [disabled]="wild+mental+physical+energy < data.card.getCost()">Discard</button>
+    <button mat-button (click)="goToDiscard()" cdkFocusInitial *ngIf="!isDiscardCards" [disabled]="data.card.getType() == 'resource'">Play</button>
+</mat-dialog-actions>
