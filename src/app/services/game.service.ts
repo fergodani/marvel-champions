@@ -38,11 +38,11 @@ export class GameService {
     return this.game.asObservable();
   }
 
-  private getGame() {
+  public getGame() {
     return this.game.value;
   }
 
-  private updateGame(game: Game) {
+  public updateGame(game: Game) {
     this.game.next(game);
   }
 
@@ -169,11 +169,16 @@ export class GameService {
   }
 
   openPlayCardDialog(data: DialogData): void {
+    const game = this.getGame();
     data.hand = data.hand.filter(card => data.card != card)
     const dialogRef = this.dialog.open(PlayCardDialogComponent, {
       data: {
         card: data.card,
-        hand: data.hand
+        hand: data.hand,
+        physicalResources: game.getPhysicalResources(),
+        mentalResources: game.getMentalResources(),
+        energyResources: game.getEnergyResources(),
+        wildResources: game.getWildResources()
       }
     });
 
@@ -211,10 +216,9 @@ export class GameService {
     return await lastValueFrom(dialogRef.afterClosed());
   }
 
-  preparePlayerCards() {
+  endTurn() {
     const game = this.getGame();
-    game.getHero().prepare();
-    game.getAllies().forEach(ally => ally.prepare())
+    game.endTurn();
   }
 
 }

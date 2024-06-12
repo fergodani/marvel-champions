@@ -12,9 +12,8 @@ export class ThwartCommand implements Command {
     }
 
     async execute(): Promise<void> {
-        const amount = this.amount;
         const target = await this.gameService.openSchemeTargetDialog()
         if (target)
-            target.thwart(amount);
+            target.thwart(this.amount);
     }
 }

@@ -12,9 +12,8 @@ export class DamageCommand implements Command {
     }
 
     async execute(): Promise<void> {
-        const amount = this.amount;
         const target = await this.gameService.openDamageTargetDialog()
         if (target)
-            target.dealDamage(amount);
+            target.dealDamage(this.amount);
     }
 }

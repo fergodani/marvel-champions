@@ -19,7 +19,7 @@ export class Game {
     private villainCards: CardJson[] = [];
     private nemesisDeck: CardJson[] = [];
     private villainCardsInPlay: CardJson[] = [];
-    
+
     private environments: CardJson[] = [];
 
     private hero!: Hero;
@@ -36,6 +36,28 @@ export class Game {
     private supports: Support[] = [];
     private upgrades: Upgrade[] = [];
     private enviroNments: Environment[] = [];
+
+    private wildResources: number = 0;
+    private physicalResources: number = 0;
+    private mentalResources: number = 0;
+    private energyResources: number = 0;
+
+    endTurn() {
+        this.preparePlayerCards();
+        this.resetResources();
+    }
+
+    preparePlayerCards() {
+        this.getHero().prepare();
+        this.getAllies().forEach(ally => ally.prepare())
+    }
+
+    resetResource() {
+        this.wildResources = 0;
+        this.mentalResources = 0;
+        this.energyResources = 0;
+        this.physicalResources = 0;
+    }
 
     // Getters and Setters
 
@@ -184,5 +206,36 @@ export class Game {
         this.mainScheme = mainScheme;
     }
 
+    getWildResources(): number {
+        return this.wildResources;
+    }
+
+    setWildResources(value: number): void {
+        this.wildResources = value;
+    }
+
+    getPhysicalResources(): number {
+        return this.physicalResources;
+    }
+
+    setPhysicalResources(value: number): void {
+        this.physicalResources = value;
+    }
+
+    getMentalResources(): number {
+        return this.mentalResources;
+    }
+
+    setMentalResources(value: number): void {
+        this.mentalResources = value;
+    }
+
+    getEnergyResources(): number {
+        return this.energyResources;
+    }
+
+    setEnergyResources(value: number): void {
+        this.energyResources = value;
+    }
 
 }

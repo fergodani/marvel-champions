@@ -19,7 +19,11 @@ import { GameService } from '../../../services/game.service';
 
 export interface DialogData {
   card: PlayerCard,
-  hand: PlayerCard[]
+  hand: PlayerCard[],
+  physicalResources: number,
+  mentalResources: number,
+  energyResources: number,
+  wildResources: number
 }
 
 @Component({
@@ -49,7 +53,12 @@ export class PlayCardDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<PlayCardDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) { }
+  ) { 
+    this.physical = data.physicalResources;
+    this.wild = data.wildResources;
+    this.mental = data.mentalResources;
+    this.energy = data.energyResources;
+  }
 
   goToDiscard() {
     if (this.data.card.getCost() == 0) {

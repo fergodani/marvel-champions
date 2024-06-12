@@ -147,7 +147,7 @@ export class GameComponent implements OnInit {
   }
 
   endTurn() {
-    this.gameService.preparePlayerCards();
+    this.gameService.endTurn();
   }
 
 }
