@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { coreCards } from '../../assets/coreCards';
-import { smCards } from '../../assets/smCards';
-import { drsCards } from '../../assets/drsCards';
-import { spdrCards } from '../../assets/spdrCards';
-import { spiderManStarterDeck } from '../../assets/decks';
-import { captainMarvelStarterDeck } from '../../assets/decks';
-import { blackPantherStarterDeck } from '../../assets/decks';
-import { sheHulkStarterDeck } from '../../assets/decks';
-import { ironManStarterDeck } from '../../assets/decks';
-import { drsStarterDeck } from '../../assets/decks';
-import { spdrStarterDeck } from '../../assets/decks';
-import { milesMoralesStarterDeck } from '../../assets/decks';
-import { ghostSpiderStarterDeck } from '../../assets/decks';
+import { coreCards } from '../data/coreCards'
+import { smCards } from '../data/smCards';
+import { drsCards } from '../data/drsCards';
+import { spdrCards } from '../data/spdrCards';
+import {  spiderManStarterDeck,
+          captainMarvelStarterDeck,
+          sheHulkStarterDeck,
+          ironManStarterDeck,
+          drsStarterDeck,
+          milesMoralesStarterDeck,
+          ghostSpiderStarterDeck,
+        } from '../data/decks';
 import { CardJson } from '../models/card.json';
 
 @Injectable({

@@ -19,6 +19,8 @@ import { interval, take, lastValueFrom } from 'rxjs';
 import { DamageTarget } from '../models/cards/interfaces/damageTarget';
 import { Scheme } from '../models/cards/interfaces/schemes';
 import { SelectSchemeDialogComponent } from '../components/game/select-scheme-dialog/select-scheme-dialog.component';
+import { HealTarget } from '../models/cards/interfaces/healTarget';
+import { SelectHealTargetDialogComponent } from '../components/game/select-heal-target-dialog/select-heal-target-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -210,6 +212,18 @@ export class GameService {
     targets.push(game.getMainScheme());
     game.getSideSchemes().forEach(scheme => targets.push(scheme))
     const dialogRef = this.dialog.open(SelectSchemeDialogComponent, {
+      data: targets,
+      disableClose: false
+    })
+    return await lastValueFrom(dialogRef.afterClosed());
+  }
+
+  async openHealTargetDialog(): Promise<void> {
+    const game = this.getGame();
+    const targets: HealTarget[] = [];
+    targets.push(game.getHero());
+    game.getAllies().forEach(ally => targets.push(ally))
+    const dialogRef = this.dialog.open(SelectHealTargetDialogComponent, {
       data: targets,
       disableClose: false
     })
