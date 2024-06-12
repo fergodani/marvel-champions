@@ -278,16 +278,32 @@ h3 {
     /* Aplica la rotación cuando se agrega la clase rotated */
 }
 
-#card5 {
+.card {
     position: relative;
 }
 
-#card5::before {
+.card::before {
     content: attr(data-counter);
     position: absolute;
     top: 0;
     right: 0;
     background-image: url('../../../assets/generic_counter.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #f3f3f3;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+}
+
+.ally::before {
+    content: attr(damage-counter);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('../../../assets/damage.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

@@ -1,9 +1,7 @@
 <main id="cards" *ngIf="game$ | async as game">
+
     <section id="villainSection">
-
         <section id="villain">
-
-
             <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                 (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)">
@@ -118,10 +116,13 @@
 
         </div>
         <section id="heroAllies">
-            <div class="card rotatable" [class.rotated]="card.isExhausted()" (mousedown)="startZoom($event)"
+            <div class="card rotatable ally" [class.rotated]="card.isExhausted()" (mousedown)="startZoom($event)"
                 (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
                 (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
-                (selectstart)="preventDefault($event)" data-counter="5" *ngFor="let card of game.getAllies()"
+                (selectstart)="preventDefault($event)"
+                 [attr.data-counter]="card.getCounters()"
+                 [attr.damage-counter]="card.getDamageCounters()"
+                  *ngFor="let card of game.getAllies()"
                 [matMenuTriggerFor]="allyMenu">
                 <img [src]="card.getImageSrc()" />
                 <mat-menu #allyMenu="matMenu">

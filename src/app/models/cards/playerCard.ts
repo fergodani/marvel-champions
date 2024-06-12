@@ -11,6 +11,7 @@ export abstract class PlayerCard {
   protected mentalResources: number;
   protected physicalResources: number;
   protected cost: number;
+  protected counters: number;
 
   constructor(card: CardJson) {
     this.code = card.code!;
@@ -23,6 +24,7 @@ export abstract class PlayerCard {
     this.mentalResources = card.resource_mental ? card.resource_mental : 0;
     this.physicalResources = card.resource_physical ? card.resource_physical : 0;
     this.cost = card.cost!;
+    this.counters = 0;
   }
 
   play() {
@@ -63,6 +65,14 @@ export abstract class PlayerCard {
 
   public getType(): string {
     return this.type;
+  }
+
+  public setCounters(amount: number) {
+    this.counters = amount;
+  }
+
+  public getCounters(): number {
+    return this.counters;
   }
 
 }
