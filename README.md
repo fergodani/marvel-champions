@@ -2,7 +2,8 @@
 El objetivo principal de este proyecto es la digitalización completa del juego de cartas Marvel Champions de Fantasy Flight Games. Esto implica la implementación de toda la lógica del juego, ya sea de los turnos del juego como las acciones y reacciones de todas las cartas. El proyecto será una aplicación web (FrontEnd y BackEnd) y permitirá al usuario elegir el héroe que quiera jugar, el villano contra el que se quiera enfrentar y el encuentro modular que quiera añadir. La aplicación guardará los resultados de las partidas jugadas y permitirá al usuario crear sus propios mazos, así a la hora de elegir héroe, puede elegir entre el mazo por defecto o uno que haya creado previamente (si hay colaboración con MarvelCDB se podrá introducir el ID del mazo).
 ## Tecnologías
 - Angular para el FrontEnd.
-- Nodejs o SpringBoot para el Backend.
+- Nodejs o SpringBoot para el Backend
+	- Lo más probable es que sea nodejs debido a que seguramente como base de datos se utilice mongo por la naturaleza de la información de las cartas. Cada carta tiene una gran cantidad de campos y muchos de ellos vienen vacíos, por lo que se recomienda el uso de una base de datos no relacional.
 ## Funcionalidades
 - **Crear una partida**: El usuario podrá elegir el héroe, villano y encuentro modular.
 - **Creación de mazos**: El usuario podrá crear un mazo y, a la hora de elegir héroe, podrá escoger el mazo creado previamente. Con estos mazos podrá:
@@ -63,10 +64,13 @@ Además, primero es necesario un estudio previo de las cartas para extraer las a
 - Buscar una carta en un mazo:
 	- Por nombre
 	- Por rasgo 
+- Mirar un número de cartas de un mazo
+	- Dejar además poder robar una a elección del jugador
 - Añadir carta a un mazo
 - Añadir estado a un personaje
 	- Confundido o aturdido
 	- Héroe o Villano
+- Realizar acción *special* de otra carta 
 - Cancelar acción de una carta
 - Cancelar activación enemigo???????
 - Añadir una carta a la mano
@@ -77,6 +81,7 @@ Además, primero es necesario un estudio previo de las cartas para extraer las a
 - Dar la vuelta a otra carta
 - Eliminar una carta del juego
 - Prevenir daño
+- Aumentar o disminuir el tamaño de la mano del jugador
 - Comandos condicionados:
 	- **Elegir una**: se le pasa una condición y se ejecuta una acción u otra.
 	- **If**: se le pasa una condición y si se cumple, se realiza la acción
@@ -86,7 +91,7 @@ Además, primero es necesario un estudio previo de las cartas para extraer las a
 Como se ha comentado antes, las acciones de las cartas se forman a partir de comandos atómicos, más pequeños, que conforman un comando más grande. Gracias a este patrón, existirá un *CompositeCommand* que tendrá varios Command y su método *execute()* simplemente será ejecutar los comandos más pequeños.
 Este comando es opcional, puesto que se podría hacer simplemente que la carta tenga un array de acciones, pero con la existencia de las condiciones (hablaremos después de ellas) es necesario el uso de este patrón.
 ### Patrón Observer
-Otro gran problema que surge a la hora de implementar la lógica del juego son las respuestas y las interrupciones. Estas son acciones que se ejecutan cuando ocurre algún evento en el juego, por lo que te puedes imaginar que no son pocas. Un ejemplo de interrupción puede ser la acción de la carta de Héroes de Spider-man: "Spider-Sense — **Interrupt**: When the villain initiates an attack against you, draw 1 card.". La complejidad reside en que esto es algo que no tiene que hacer el usuario, se lo tiene que dar el juego automáticamente, por lo que es necesario que el se esté continuamente comprobando cuándo suceden estos eventos y quién tiene una acción asociada. Esto es un claro ejemplo del patrón **Observer**.
+Otro gran problema que surge a la hora de implementar la lógica del juego son las respuestas y las interrupciones. Estas son acciones que se ejecutan cuando ocurre algún evento en el juego, por lo que te puedes imaginar que no son pocas. Un ejemplo de interrupción puede ser la acción de la carta de Héroe de Spider-man: "Spider-Sense — **Interrupt**: When the villain initiates an attack against you, draw 1 card.". La complejidad reside en que esto es algo que no tiene que hacer el usuario, se lo tiene que dar el juego automáticamente, por lo que es necesario que se esté continuamente comprobando cuándo suceden estos eventos y quién tiene una acción asociada. Esto es un claro ejemplo del patrón **Observer**.
 El patrón **Observer** está compuesto por los siguientes elementos:
 - **Subject**: clase que notifica a todos los objetos que tenga suscritos. En este caso, representa los eventos que pueden suceder en el juego.
 - **Observer**: clase que se puede suscribir a un **Subject** y que hará algo cuando dicho Subject se lo notifique.
@@ -238,3 +243,14 @@ Es necesario también una tarea de análisis de las cartas para ver qué condici
 - Requirement (resource): es necesario pagar dicho recurso 
 - Controlar una carta de un rasgo determinado
 - Que tu identidad tenga cierto rasgo
+### Lógica de héroes y villanos
+Después de diseñar la lógica del juego y empezar a pensar cómo implementar diferentes héroes y villanos, se ha llegado a la conclusión de que, haciendo uso de la lógica antes descrita, será necesario crear lógica concreta para algunos héroes y villanos, debido a que hay personajes que tienen alguna mecánica de juego que ningún otro personaje la tiene, como por ejemplo, el mazo extra de invocaciones de Doctor Strange. Para este último caso, se puede utilizar el resto de la lógica ya diseñada (robar, descartar e utilizar cartas, por ejemplo) pero es necesario implementar el mazo extra.
+Por tanto, existirán clases exclusivas para algunos héroes o villanos y se realizará la interfaz para que sea lo más genérica posible (intentar no hacer un elemento en el html solo para el mazo extra de Doctor Strange, aunque si no queda opción se tendrá que hacer así).
+Algunos ejemplos de lógica exclusiva de algunos héroes y villanos son:
+- **Doctor Strange**: tiene un mazo extra.
+- **Black Panther**: la carta "Wakanda forever" hace que se disparen todos los efectos de las mejoras del traje que tenga, pero es el jugador quien elije el orden de estas.
+- **SP/DR**: este héroe cuenta con dos cartas de héroe, el robot y Peni Parker. No es mucha más lógica pero hay que tener en cuenta ambas cartas.
+- **Ultrón**: cada vez que Ultrón te ataca, te roba la carta superior de tu mazo y la pone bocabajo como un enemigo enfrentado a ti.
+- **Los 6 siniestros**: este villano cuenta con varios villanos a la vez. Cuando se prepara la partida, se escoge aleatoriamente a dos de ellos y son enfrentados al héroe al mismo tiempo.
+- **Loki**: le pasa algo parecido al anterior. Tiene varias formas y al principio se escoge aleatoriamente a dos de ellas.
+- **Hela**: este villano tiene la particularidad de que es inmortal a no ser que se cumpla alguna condición. Dicha condición tiene que ver con la carta de Aliado Odín.
