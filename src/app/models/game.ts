@@ -52,7 +52,7 @@ export class Game {
         this.getAllies().forEach(ally => ally.prepare())
     }
 
-    resetResource() {
+    resetResources() {
         this.wildResources = 0;
         this.mentalResources = 0;
         this.energyResources = 0;

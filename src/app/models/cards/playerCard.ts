@@ -4,7 +4,7 @@ export abstract class PlayerCard {
   protected code: string;
   protected name: string;
   protected type: string;
-  protected imagesrc: string;
+  imagesrc: string;
   protected traits: string[];
   protected energyResources: number;
   protected wildResources: number;
@@ -24,7 +24,7 @@ export abstract class PlayerCard {
     this.mentalResources = card.resource_mental ? card.resource_mental : 0;
     this.physicalResources = card.resource_physical ? card.resource_physical : 0;
     this.cost = card.cost!;
-    this.counters = 0;
+    this.counters = 2;
   }
 
   play() {

@@ -1,9 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { coreCards } from '../../../assets/coreCards';
-import { smCards } from '../../../assets/smCards';
-import { drsCards } from '../../../assets/drsCards';
-import { spdrCards } from '../../../assets/spdrCards';
 import { NgFor, NgIf, AsyncPipe, NgStyle } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -58,11 +54,6 @@ export class GameComponent implements OnInit {
   ) {
     this.game$ = this.gameService.getGameObservable();
   }
-
-  coreCards = coreCards;
-  smCards = smCards;
-  drsCards = drsCards;
-  spdrCards = spdrCards;
 
   startZoom(event: Event) {
     //event.preventDefault();

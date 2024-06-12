@@ -5,6 +5,8 @@ import { drsCards } from '../data/drsCards';
 import { spdrCards } from '../data/spdrCards';
 import {  spiderManStarterDeck,
           captainMarvelStarterDeck,
+          blackPantherStarterDeck,
+          spdrStarterDeck,
           sheHulkStarterDeck,
           ironManStarterDeck,
           drsStarterDeck,

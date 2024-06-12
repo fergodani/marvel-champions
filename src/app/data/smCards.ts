@@ -1,4 +1,4 @@
-import { CardJson } from "../app/models/card.json";
+import { CardJson } from "../models/card.json";
 
 export const smCards: CardJson[] = [
     {

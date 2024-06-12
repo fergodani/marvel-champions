@@ -38,7 +38,7 @@ import { HealTarget } from '../../../models/cards/interfaces/healTarget';
 export class SelectHealTargetDialogComponent {
   selectedCard: HealTarget | null = null;
   constructor(
-    public dialogRef: MatDialogRef<SelectTargetDialogComponent>,
+    public dialogRef: MatDialogRef<SelectHealTargetDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public targets: HealTarget[],
   ) { }
 

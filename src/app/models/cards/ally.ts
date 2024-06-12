@@ -5,9 +5,10 @@ import { DamageCommand } from "../commands/damage-command";
 import { ExhaustCommand } from "../commands/exhaust-command";
 import { ThwartCommand } from "../commands/thwart-command";
 import { Exhaustable } from "./interfaces/exhaustable";
+import { HealTarget } from "./interfaces/healTarget";
 import { PlayerCard } from "./playerCard";
 
-export class Ally extends PlayerCard implements Exhaustable {
+export class Ally extends PlayerCard implements Exhaustable, HealTarget {
     private health: number;
     private attack: number;
     private thwart: number;
@@ -24,7 +25,7 @@ export class Ally extends PlayerCard implements Exhaustable {
         this.health = card.health!;
         this.attack = card.attack!;
         this.thwart = card.thwart!;
-        this.attackCommand = card.attack_cost!;
+        this.attackCost = card.attack_cost!;
         this.thwartCost = card.thwart_cost!;
         this.damageCounters = 0;
 
@@ -38,22 +39,26 @@ export class Ally extends PlayerCard implements Exhaustable {
         this.thwartCommand.add(new ThwartCommand(this.thwart, gameService));
         this.thwartCommand.add(new ExhaustCommand(this));
     }
+    
+    heal(amount: number): void {
+        throw new Error("Method not implemented.");
+    }
 
     public executeAttack() {
         if (this.exhausted) return;
         this.attackCommand.execute();
-        this.heal -= this.attackCost;
+        this.health -= this.attackCost;
         this.damageCounters += this.attackCost;
-        if (this.heal <= 0)
+        if (this.health <= 0)
             this.gameService.discardCards([this])
     }
 
     public executeThwart() {
         if (this.exhausted) return;
         this.thwartCommand.execute();
-        this.heal -= this.thwartCost;
+        this.health -= this.thwartCost;
         this.damageCounters += this.thwartCost;
-        if (this.heal <= 0)
+        if (this.health <= 0)
             this.gameService.discardCards([this])
     }
 

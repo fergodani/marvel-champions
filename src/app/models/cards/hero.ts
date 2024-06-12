@@ -7,9 +7,10 @@ import { DamageCommand } from "../commands/damage-command";
 import { ExhaustCommand } from "../commands/exhaust-command";
 import { ThwartCommand } from "../commands/thwart-command";
 import { Exhaustable } from "./interfaces/exhaustable";
+import { HealTarget } from "./interfaces/healTarget";
 import { PlayerCard } from "./playerCard";
 
-export class Hero implements Exhaustable {
+export class Hero implements Exhaustable, HealTarget {
   private health: number;
   private attack: number;
   private thwart: number;
@@ -24,6 +25,8 @@ export class Hero implements Exhaustable {
   private attackCommand: CompositeCommand;
   private thwartCommand: CompositeCommand;
   exhausted: boolean = false;
+  
+  imagesrc: string;
 
   constructor(card: CardJson, gameService: GameService) {
     this.health = card.health!;
@@ -37,6 +40,7 @@ export class Hero implements Exhaustable {
     this.card_set_code = card.card_set_code!;
     this.heroImagesrc = card.imagesrc ? 'https://marvelcdb.com' + card.imagesrc : 'https://marvelcdb.com/bundles/cards/' + card.code + '.png';
     this.alterEgoImagesrc = card.linked_card?.imagesrc ? 'https://marvelcdb.com' + card.linked_card?.imagesrc : 'https://marvelcdb.com/bundles/cards/' + card.code + '.png';
+    this.imagesrc = this.alterEgoImagesrc;
     this.attackCommand = new CompositeCommand();
     this.attackCommand.add(new DamageCommand(this.attack, gameService));
     this.attackCommand.add(new ExhaustCommand(this));
@@ -44,6 +48,10 @@ export class Hero implements Exhaustable {
     this.thwartCommand = new CompositeCommand();
     this.thwartCommand.add(new ThwartCommand(this.thwart, gameService));
     this.thwartCommand.add(new ExhaustCommand(this));
+  }
+
+  heal(amount: number): void {
+    throw new Error("Method not implemented.");
   }
 
   exhaust(): void {

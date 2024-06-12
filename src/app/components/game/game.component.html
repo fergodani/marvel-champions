@@ -53,8 +53,8 @@
         <div id="line">
             <section class="decks">
                 <div id="encounter-discard" class="deck" [attr.data-counter]="game.getDiscardEncounterDeck().length">
-                    <img [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'"
-                        *ngIf="game.getDiscardEncounterDeck().length != 0" />
+                    <!--<img [src]="coreCards[100].imagesrc ? 'https://marvelcdb.com' + coreCards[100].imagesrc : 'https://marvelcdb.com/bundles/cards/' + '.png'"
+                        *ngIf="game.getDiscardEncounterDeck().length != 0" /> -->
                     <img src="../../../assets/encounter_discard.png" alt="encounter discard"
                         *ngIf="game.getDiscardEncounterDeck().length == 0" />
                 </div>
@@ -107,16 +107,17 @@
             </div>
         </section>
         <div id="hero-upgrades">
-            <div class="card rotatable" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
+            <div class="card rotatable playerCard" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                 (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
+                [attr.data-counter]="card.getCounters()"
                 *ngFor="let card of game.getHeroUpgrades()" [matMenuTriggerFor]="actionMenu">
                 <img [src]="card.getImageSrc()" />
             </div>
 
         </div>
         <section id="heroAllies">
-            <div class="card rotatable ally" [class.rotated]="card.isExhausted()" (mousedown)="startZoom($event)"
+            <div class="card rotatable ally playerCard" [class.rotated]="card.isExhausted()" (mousedown)="startZoom($event)"
                 (mouseup)="stopZoom($event)" (touchstart)="startZoom($event)" (touchend)="stopZoom($event)"
                 (touchcancel)="stopZoom($event)" (contextmenu)="preventDefault($event)"
                 (selectstart)="preventDefault($event)"
@@ -132,10 +133,11 @@
             </div>
         </section>
         <section id="heroSupports">
-            <div class="card" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
+            <div class="card playerCard" (mousedown)="startZoom($event)" (mouseup)="stopZoom($event)"
                 (touchstart)="startZoom($event)" (touchend)="stopZoom($event)" (touchcancel)="stopZoom($event)"
                 (contextmenu)="preventDefault($event)" (selectstart)="preventDefault($event)"
-                *ngFor="let card of game.getHeroSupport()" [matMenuTriggerFor]="actionMenu">
+                *ngFor="let card of game.getHeroSupport()"
+                [attr.data-counter]="card.getCounters() > 0 ? card.getCounters() : null" [matMenuTriggerFor]="actionMenu">
                 <img [src]="card.getImageSrc()" />
             </div>
         </section>

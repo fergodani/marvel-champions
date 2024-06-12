@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { coreCards } from '../../../assets/coreCards';
-import { smCards } from '../../../assets/smCards';
-import { drsCards } from '../../../assets/drsCards';
-import { spdrCards } from '../../../assets/spdrCards';
 import { NgFor, NgStyle, NgIf } from '@angular/common';
 import { CardJson } from '../../models/card.json';
 import { CardService } from '../../services/card.service';

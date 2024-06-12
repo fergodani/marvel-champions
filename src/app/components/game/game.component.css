@@ -52,23 +52,6 @@ h3 {
     position: relative;
 }
 
-.scheme::before {
-    content: attr(data-counter);
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-image: url('../../../assets/threat.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #333;
-    padding: 5px 10px;
-    font-weight: bold;
-    font-size: 14px;
-    display: flex;
-}
-
-
 .scheme img {
     height: 75px;
     width: auto;
@@ -282,7 +265,7 @@ h3 {
     position: relative;
 }
 
-.card::before {
+.playerCard::before {
     content: attr(data-counter);
     position: absolute;
     top: 0;
@@ -298,11 +281,32 @@ h3 {
     display: flex;
 }
 
-.ally::before {
+.playerCard[data-counter="0"]::before {
+    content: none; /* No muestra el ::before cuando el contador es 0 */
+  }
+
+.scheme::before {
+    content: attr(data-counter);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('../../../assets/threat.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #333;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+}
+
+.ally::after {
     content: attr(damage-counter);
     position: absolute;
     top: 0;
     right: 0;
+    margin-top: 2em;
     background-image: url('../../../assets/damage.png');
     background-size: contain;
     background-position: center;
